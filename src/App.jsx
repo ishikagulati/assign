@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { Search } from "lucide-react";
 
+// ✅ HEADER
 const Header = () => (
   <div className="bg-white px-6 py-4 border-b text-2xl font-bold flex items-center">
     <img src="image1.png" alt="logo" className="h-12 w-12 mr-2" />
@@ -10,7 +11,13 @@ const Header = () => (
   </div>
 );
 
+// ✅ SIDEBAR with Search Functionality
 const Sidebar = ({ todos, onDelete, search, setSearch, onAddTodoClick }) => {
+  // Filter todos by search (case insensitive)
+  const filteredTodos = todos.filter(todo =>
+    todo.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="w-full md:w-1/3 max-w-full md:max-w-sm bg-white border-r overflow-y-auto p-4">
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between mb-4 gap-2">
@@ -32,10 +39,10 @@ const Sidebar = ({ todos, onDelete, search, setSearch, onAddTodoClick }) => {
         </div>
       </div>
 
-      {todos.length === 0 ? (
+      {filteredTodos.length === 0 ? (
         <p className="text-gray-500">No todos found.</p>
       ) : (
-        todos.map((todo, index) => (
+        filteredTodos.map((todo, index) => (
           <div
             key={index}
             className="mb-4 p-3 border rounded bg-gray-50 shadow-sm"
@@ -61,6 +68,7 @@ const Sidebar = ({ todos, onDelete, search, setSearch, onAddTodoClick }) => {
   );
 };
 
+// ✅ EDITOR
 const Editor = ({ addTodo }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -116,6 +124,7 @@ const Editor = ({ addTodo }) => {
   );
 };
 
+// ✅ MAIN APP
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [search, setSearch] = useState("");
@@ -146,3 +155,4 @@ const App = () => {
 };
 
 export default App;
+
